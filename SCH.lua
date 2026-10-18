@@ -38,6 +38,7 @@ function job_setup()
     state.SubWeapons        = M{'コーンスー','アムラピシールド','玄冥盾','エンキストラップ','カルミナス','チャンターシールド'}
     state.VagaryMode        = M(false, 'Vagary')
     state.TreasureHunter    = M(false)
+    state.ShareRecast       = M(true, 'ShareRecast')   -- 章・グリモアを使うたびに戦術魔道書のリキャストを /p に出す (//gs c toggle ShareRecast で切替)
 
     send_command('bind ~f7 gs c cycle VagaryMode')
 end
@@ -73,6 +74,17 @@ function job_post_precast(spell, action, spellMap, eventArgs)
         local surplus = sets.precast.FC.BlackSurplus and fc_gear_value
             and (fc_gear_value.BlackSurplus + sub_job_fast_cast() >= 80)
         equip(surplus and sets.precast.FC.BlackSurplus or sets.precast.FC.Black)
+    end
+end
+
+
+-- 章 (type = Scholar。リキャスト 231 の戦術魔道書を 1 つ使うもの) と、白/黒のグリモアを使い終えたら、
+-- 戦術魔道書のリキャスト (残り回数と次の回復) を PT 会話に出す。<recast=…> はゲームが入力時に置き換える
+-- 同じ瞬間に別のチャット入力 (震天の連携の合図) と重なるとエラーになるので、終了の合図 (1.2 秒) より遅らせる
+function job_aftercast(spell, action, spellMap, eventArgs)
+    if not state.ShareRecast.value or spell.interrupted then return end
+    if spell.type == 'Scholar' or spell.english == 'Light Arts' or spell.english == 'Dark Arts' then
+        send_command('wait 1.6; input /p <recast='..windower.to_shift_jis('戦術魔道書')..'>')
     end
 end
 
@@ -258,6 +270,8 @@ function disp_end_skillchain_message(sc_name, count)
     local end_msg = get_auto_translate_char_squence('全力で攻撃だ！')
 
     msg = msg..end_msg..windower.to_shift_jis(' → ')..' <t> '..windower.to_shift_jis('※').. '<recast='..windower.to_shift_jis("戦術魔道書")..'>'
-    send_command('wait 0.2; '..msg)
+    -- 開始の合図 (0.2 秒後) と同じマクロで続けて呼ばれると、2 つのチャット入力が同じ瞬間に重なって
+    -- 「コマンドでエラーがあったようです」になる (2026-10-12、核熱専用マクロの ①→③)。終了の合図は 1 秒遅らせる
+    send_command('wait 1.2; '..msg)
 end
 -- ▲▲▲▲▲▲ 震天動地連携用設定 ▲▲▲▲▲▲
