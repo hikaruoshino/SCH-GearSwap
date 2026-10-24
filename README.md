@@ -133,3 +133,9 @@ FFXI の利用規約では、外部ツールの利用が禁止されています
   * 同じ日に、戦術魔道書のリキャストを PT 会話に出す機能（ShareRecast）を追加しましたが、10 月 19 日に外しました。
 * **2026-10-09**
   * 初版公開。
+
+## 不具合・動作報告 / Feedback
+
+「動きました」の一言だけでも歓迎です。GitHub のアカウントがあれば、[Issues](../../issues/new/choose) から書き込めます (日本語・英語どちらでも)。
+
+A one-line "it works" is welcome too. With a GitHub account you can post from [Issues](../../issues/new/choose) (Japanese or English).
