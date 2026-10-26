@@ -74,6 +74,18 @@ function job_post_precast(spell, action, spellMap, eventArgs)
             and (fc_gear_value.BlackSurplus + sub_job_fast_cast() >= 80)
         equip(surplus and sets.precast.FC.BlackSurplus or sets.precast.FC.Black)
     end
+
+    -- ★電光石火の章・疾風迅雷の章の足 (天候が一致する魔法の詠唱時間・再詠唱時間を短縮) は、
+    --   「魔法使用時に装備している必要がある」(FF11用語辞典 ペダゴギアタイア)。詠唱時間は詠唱を始めた時点で決まるので、
+    --   詠唱中 (job_post_midcast) に加えて、ここでも着る。FC のセットより後に着て、足を上書きする
+    if spell.action_type == 'Magic' and spell.name ~= 'インパクト' then
+        for _, buff in ipairs({'電光石火の章', '疾風迅雷の章'}) do
+            if buffactive[buff] and sets.buff[buff]
+            and not (spell.name == 'オーラ' and buff == '電光石火の章') then   -- midcast と同じく、オーラでは着ない
+                equip(sets.buff[buff])
+            end
+        end
+    end
 end
 
 
