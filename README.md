@@ -107,7 +107,7 @@ FFXI の利用規約では、外部ツールの利用が禁止されています
 
 ## 関連
 
-* **Melton6**（学者の6連携メルトン 自動キャストアドオン）: [GitHub](https://github.com/hikaruoshino/Melton6) / [ブログ記事](https://ff11-gearswap-lab.hatenablog.com/entry/2026/10/09/195229)
+* **Melton6**（学者の6連携メルトン 自動キャストアドオン）: [GitHub](https://github.com/hikaruoshino/Melton6) / [ブログ記事](https://ff11-gearswap-lab.hatenablog.com/entry/2026/10/28/035755)
 * **元の GearSwap コード**: [WindowerでFF11ライフ（greeds.net）](https://greeds.net/gearswap-code-list/)
 
 ---
