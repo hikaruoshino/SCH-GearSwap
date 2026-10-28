@@ -139,7 +139,10 @@ end
 
 
 function job_state_change(stateField, newValue, oldValue)
-    user_state_change(stateField, newValue, oldValue)
+    -- user-globals.lua が無い・user_state_change が無いときも落ちないようにする (PLD.lua・RNG.lua と同じ)
+    if user_state_change then
+        user_state_change(stateField, newValue, oldValue)
+    end
     if stateField == 'Vagary' then
         if newValue then
             equip(sets.precast.FC)
