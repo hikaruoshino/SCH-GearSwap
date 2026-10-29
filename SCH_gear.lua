@@ -247,7 +247,7 @@ function init_gear_sets()
         legs="ニャメフランチャ", 
         feet="ニャメソルレット", 
         neck={ name="アギュトストール+2", augments={'Path: A',}},
-        waist="スクリミルコード+1",
+        waist="スクリミルコード",
         left_ear="マリグナスピアス",
         right_ear="王将の耳飾り",
         left_ring="フレキリング",
@@ -255,15 +255,8 @@ function init_gear_sets()
         back=gear.JobMantle.MGC ,
     }
     
-	    sets.precast.WS["イオリアンエッジ"] = set_combine(sets.precast.WS.Magic,{
-    ammo="オシャシャの原論文",
-    waist="風輪の帯",
-    left_ear="マリグナスピアス",
-    right_ear="王将の耳飾り",
-    left_ring="フレキリング",
-    right_ring="コーネリアリング",
-   }) 
-	
+-- イオリアンエッジのセットは、init_weapon_skill() が共通の sets.precast.WS.Magic で上書きするので、下の init_weapon_skill() の後ろで定義する
+
 	    sets.precast.WS["ミルキル"] = set_combine(sets.precast.WS.Magic,{
     ammo="ストンチタスラム+1",
     head="ＰＤボード+4",
@@ -283,6 +276,16 @@ function init_gear_sets()
     
     --共通WS定義読み込み
     init_weapon_skill()
+
+    --イオリアンエッジ（ここで定義しないと、上の共通定義 sets.precast.WS.Magic で上書きされる）
+    sets.precast.WS["イオリアンエッジ"] = set_combine(sets.precast.WS.Magic,{
+    ammo="オシャシャの原論文",
+    waist="風輪の帯",
+    left_ear="マリグナスピアス",
+    right_ear="王将の耳飾り",
+    left_ring="フレキリング",
+    right_ring="コーネリアリング",
+   }) 
 
     
     --弱体魔法
